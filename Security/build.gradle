@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id "com.github.onslip.gradle-one-jar" version "1.1.0"
+}
+
+group = 'daniela.marte'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	compileOnly 'org.projectlombok:lombok:1.18.34'
+	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.34'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.3.3'
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.3.4'
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.4.1'
+
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.6'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.6'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jar {
+	manifest {
+		attributes(
+				"Main-Class": "daniela.marte.security.SecurityApplication",
+		)
+	}
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
