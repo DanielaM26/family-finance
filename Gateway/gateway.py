@@ -35,8 +35,8 @@ def register(request: RegisterRequest):
     """
     # Step 1: Register the user with the authentication service
     user_data = {
-        "first_name": request.first_name,
-        "last_name": request.last_name,
+        "firstName": request.firstName,
+        "lastName": request.lastName,
         "email": request.email,
         "password": request.password,
     }
@@ -53,8 +53,8 @@ def register(request: RegisterRequest):
 
     # Step 2: Create a family member with the provided extra fields
     family_member_data = FamilyMemberRequest(
-        firstName=request.first_name,
-        lastName=request.last_name,
+        firstName=request.firstName,
+        lastName=request.lastName,
         age=request.age,
         role=request.role
     )

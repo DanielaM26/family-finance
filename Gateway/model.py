@@ -3,8 +3,8 @@ from pydantic import BaseModel
 
 
 class RegisterRequest(BaseModel):
-    first_name: str
-    last_name: str
+    firstName: str
+    lastName: str
     email: str
     password: str
     age: int
@@ -24,4 +24,4 @@ class ExpenseRequest(BaseModel):
     description: str
     price: float
     quantity: int
-    family_member_id: int
+    familyMemberId: int
